@@ -1,0 +1,31 @@
+// This #include statement was automatically added by the Particle IDE.
+
+#include "Adafruit_DHT.h" // accessing the Adafruit_DHT.h library or header file,
+
+// DHT11 temperature sensor example for the webhook.
+
+#define DHTPIN 2     // what pin temperature sensor connected to
+
+// Uncomment whatever type you're using!
+//#define DHTTYPE DHT11	
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
+
+int led = D7;  // The on-board LED
+
+void setup() {
+  pinMode(led, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(led, HIGH);   // Turn ON the LED
+  
+  float t = dht.getTempCelcius();
+
+  String temp = String(t);
+  Particle.publish("Temp", temp, PRIVATE);
+  delay(30000);               // Wait for 30 seconds
+
+  digitalWrite(led, LOW);    // Turn OFF the LED
+  delay(30000);               // Wait for 30 seconds
+}
